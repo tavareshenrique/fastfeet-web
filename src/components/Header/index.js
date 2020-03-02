@@ -1,22 +1,73 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-import { Container, Content, Profile } from './styles';
+import { confirmAlert } from 'react-confirm-alert'; // Import
 
-export default function Header() {
+import { signOut } from '~/store/modules/auth/actions';
+
+import Menu from '~/components/Menu';
+
+import logo from '~/assets/fastfeet-logo.png';
+
+import { Container, Content, Logo, Profile, ButtonLink } from './styles';
+
+function Header({ location }) {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
+
+  function handleSignOut() {
+    confirmAlert({
+      title: 'Deseja Sair?',
+      message: 'Você realmente deseja sair do sistema?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => dispatch(signOut()),
+        },
+        {
+          label: 'No',
+          onClick: () => {},
+        },
+      ],
+    });
+  }
+
   return (
     <Container>
       <Content>
         <nav>
-          {/* <img src={logo} alt="GoBarber" /> */}
-          <Link to="/dashboard">DASHBOARD</Link>
+          <Logo src={logo} alt="FastFeet" />
+          <Menu
+            page="/orders"
+            pathname={location.pathname}
+            label="ENCOMENDAS"
+          />
+          <Menu
+            page="/deliverymen"
+            pathname={location.pathname}
+            label="ENTREGADORES"
+          />
+          <Menu
+            page="/recipients"
+            pathname={location.pathname}
+            label="DESTINATÁRIOS"
+          />
+          <Menu
+            page="/problems"
+            pathname={location.pathname}
+            label="PROBLEMAS"
+          />
         </nav>
 
         <aside>
           <Profile>
             <div>
-              <strong>Admin FastFeet</strong>
-              <Link to="/profile">Meu Perfil</Link>
+              <strong>{user.name}</strong>
+              <ButtonLink type="button" onClick={handleSignOut}>
+                Sair
+              </ButtonLink>
             </div>
           </Profile>
         </aside>
@@ -24,3 +75,11 @@ export default function Header() {
     </Container>
   );
 }
+
+export default withRouter(Header);
+
+Header.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
+};

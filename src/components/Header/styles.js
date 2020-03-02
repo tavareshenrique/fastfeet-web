@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Container = styled.div`
   height: 64px;
@@ -8,7 +9,6 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   height: 64px;
-  max-width: 900px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -16,6 +16,10 @@ export const Content = styled.div`
   nav {
     display: flex;
     align-items: center;
+
+    a + a {
+      margin-left: 15px;
+    }
     img {
       margin-right: 20px;
       padding-right: 20px;
@@ -23,13 +27,17 @@ export const Content = styled.div`
     }
     a {
       font-weight: bold;
-      color: #7159c1;
+      color: #999999;
     }
   }
   aside {
     display: flex;
     align-items: center;
   }
+`;
+
+export const Logo = styled.img`
+  width: 150px;
 `;
 
 export const Profile = styled.div`
@@ -55,5 +63,17 @@ export const Profile = styled.div`
     width: 32px;
     height: 32px;
     border-radius: 50%;
+  }
+`;
+
+export const ButtonLink = styled.button`
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+
+  color: #f62d51;
+
+  &:hover {
+    color: ${darken(0.2, '#f62d51')};
   }
 `;
