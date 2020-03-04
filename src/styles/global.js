@@ -1,7 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 
 import 'react-toastify/dist/ReactToastify.css';
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import 'antd/dist/antd.css';
 
 export default createGlobalStyle`
   * {
@@ -15,7 +16,7 @@ export default createGlobalStyle`
   }
   html, body, #root {
     height: 100%;
-    background: linear-gradient(-90deg, #7159c1, #ab59c1);
+    background: #f5f5f5;
   }
   body {
     -webkit-font-smoothing: antialiased;
