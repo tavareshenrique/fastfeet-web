@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Table as TableAntd } from 'antd';
 
-export default function Table({ children, data }) {
+export default function Table({ data, columns }) {
   const dataTable = useMemo(
     () =>
       data.map(d => {
@@ -15,10 +15,10 @@ export default function Table({ children, data }) {
     [data]
   );
 
-  return <TableAntd dataSource={dataTable}>{children}</TableAntd>;
+  return <TableAntd dataSource={dataTable} columns={columns} rowKey="id" />;
 }
 
 Table.propTypes = {
-  children: PropTypes.element.isRequired,
-  data: PropTypes.arrayOf(PropTypes.string).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
