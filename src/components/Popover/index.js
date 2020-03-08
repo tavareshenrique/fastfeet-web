@@ -9,28 +9,38 @@ import remove from '~/assets/remove.png';
 
 import { Container, Option } from './styles';
 
-export default function Popover({ visible, handleVisibleChange }) {
+export default function Popover({
+  visible,
+  handleVisibleChange,
+  showView,
+  showEdit,
+  labelDelete,
+}) {
   return (
     <PopoverAntd
       placement="bottom"
       content={
         <Container>
-          <div>
-            <Option type="button" onClick={() => {}}>
-              <img src={view} alt="View" />
-              Visualizar
-            </Option>
-          </div>
-          <div>
-            <Option type="button" onClick={() => {}}>
-              <img src={edit} alt="Edit" />
-              Editar
-            </Option>
-          </div>
+          {showView && (
+            <div>
+              <Option type="button" onClick={() => {}}>
+                <img src={view} alt="View" />
+                Visualizar
+              </Option>
+            </div>
+          )}
+          {showEdit && (
+            <div>
+              <Option type="button" onClick={() => {}}>
+                <img src={edit} alt="Edit" />
+                Editar
+              </Option>
+            </div>
+          )}
           <div>
             <Option type="button" onClick={() => {}}>
               <img src={remove} alt="Remove" />
-              Excluir
+              {labelDelete}
             </Option>
           </div>
         </Container>
@@ -42,7 +52,16 @@ export default function Popover({ visible, handleVisibleChange }) {
   );
 }
 
+Popover.defaultProps = {
+  showView: true,
+  showEdit: true,
+  labelDelete: 'Excluir',
+};
+
 Popover.propTypes = {
   visible: PropTypes.bool.isRequired,
   handleVisibleChange: PropTypes.func.isRequired,
+  showView: PropTypes.bool,
+  showEdit: PropTypes.bool,
+  labelDelete: PropTypes.string,
 };
