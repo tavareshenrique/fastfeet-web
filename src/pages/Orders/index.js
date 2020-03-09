@@ -7,8 +7,7 @@ import Container from '~/components/Container';
 import Table from '~/components/Table';
 import Tag from '~/components/Tag';
 import Popover from '~/components/Popover';
-
-import { Action } from './styles';
+import Action from '~/components/Action';
 
 export default function Orders() {
   const [data, setData] = useState([]);
@@ -17,6 +16,12 @@ export default function Orders() {
   const searchWord = useSelector(state => state.search.searchWord);
 
   const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      rowKey: 'id',
+    },
     {
       title: 'Entregador',
       dataIndex: 'entregador',
@@ -53,9 +58,7 @@ export default function Orders() {
       rowKey: 'action',
       render: dataRender => (
         <div>
-          <Action type="button" onClick={() => setCurrentRow(dataRender.id)}>
-            ...
-          </Action>
+          <Action onClick={() => setCurrentRow(dataRender.id)} />
 
           <Popover
             visible={currentRow === dataRender.id}
@@ -82,28 +85,32 @@ export default function Orders() {
     return 'PENDENTE';
   }
 
-  async function fetchOrders() {
-    const response = await api.get('/orders');
-
-    const ordersData = response.data.map(order => {
-      return {
-        id: order.id,
-        destinatario: order.recipient.name,
-        entregador: order.deliveryman.name,
-        cidade: order.recipient.street,
-        estado: order.recipient.state,
-        status: orderStatus(order),
-      };
-    });
-
-    setData(ordersData);
-  }
-
   useEffect(() => {
+    async function fetchOrders() {
+      const response = await api.get('/orders');
+
+      const ordersData = response.data.map(order => {
+        return {
+          id: order.id,
+          destinatario: order.recipient.name,
+          entregador: order.deliveryman.name,
+          cidade: order.recipient.street,
+          estado: order.recipient.state,
+          status: orderStatus(order),
+        };
+      });
+
+      setData(ordersData);
+    }
+
     const filteredData = data.filter(element => {
-      return element.destinatario
-        .toLowerCase()
-        .includes(searchWord.toLowerCase());
+      return (
+        element.destinatario.toLowerCase().includes(searchWord.toLowerCase()) ||
+        element.entregador.toLowerCase().includes(searchWord.toLowerCase()) ||
+        element.cidade.toLowerCase().includes(searchWord.toLowerCase()) ||
+        element.estado.toLowerCase().includes(searchWord.toLowerCase()) ||
+        element.status.toLowerCase().includes(searchWord.toLowerCase())
+      );
     });
 
     if (filteredData.length > 0 && searchWord !== '') {
@@ -111,12 +118,27 @@ export default function Orders() {
     } else {
       fetchOrders();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchWord]);
 
   useEffect(() => {
+    async function fetchOrders() {
+      const response = await api.get('/orders');
+
+      const ordersData = response.data.map(order => {
+        return {
+          id: order.id,
+          destinatario: order.recipient.name,
+          entregador: order.deliveryman.name,
+          cidade: order.recipient.street,
+          estado: order.recipient.state,
+          status: orderStatus(order),
+        };
+      });
+
+      setData(ordersData);
+    }
+
     fetchOrders();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
