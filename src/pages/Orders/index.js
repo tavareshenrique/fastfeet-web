@@ -1,5 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+
+import { format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
+
+import Modal from 'react-responsive-modal';
 
 import api from '~/services/api';
 
@@ -9,9 +15,13 @@ import Tag from '~/components/Tag';
 import Popover from '~/components/Popover';
 import Action from '~/components/Action';
 
+import { Signature } from './styles';
+
 export default function Orders() {
   const [data, setData] = useState([]);
+  const [dataRow, setDataRow] = useState([]);
   const [currentRow, setCurrentRow] = useState('');
+  const [openModal, setOpenModal] = useState(false);
 
   const searchWord = useSelector(state => state.search.searchWord);
 
@@ -63,6 +73,13 @@ export default function Orders() {
           <Popover
             visible={currentRow === dataRender.id}
             handleVisibleChange={visible => setCurrentRow(visible)}
+            handleViewClick={() => {
+              if (!openModal) {
+                setOpenModal(!openModal);
+                setCurrentRow(false);
+                setDataRow(dataRender);
+              }
+            }}
           />
         </div>
       ),
@@ -94,9 +111,22 @@ export default function Orders() {
           id: order.id,
           destinatario: order.recipient.name,
           entregador: order.deliveryman.name,
-          cidade: order.recipient.street,
+          cidade: order.recipient.city,
+          rua: order.recipient.street,
           estado: order.recipient.state,
+          cep: order.recipient.zipcode,
           status: orderStatus(order),
+          retirada: order.start_date
+            ? format(new Date(order.start_date), 'dd/MM/yyyy', {
+                locale: pt,
+              })
+            : 'Pendente',
+          entrega: order.end_date
+            ? format(new Date(order.end_date), 'dd/MM/yyyy', {
+                locale: pt,
+              })
+            : 'Pendente',
+          assinatura: order.signature,
         };
       });
 
@@ -129,9 +159,22 @@ export default function Orders() {
           id: order.id,
           destinatario: order.recipient.name,
           entregador: order.deliveryman.name,
-          cidade: order.recipient.street,
+          cidade: order.recipient.city,
+          rua: order.recipient.street,
           estado: order.recipient.state,
+          cep: order.recipient.zipcode,
           status: orderStatus(order),
+          retirada: order.start_date
+            ? format(new Date(order.start_date), 'dd/MM/yyyy', {
+                locale: pt,
+              })
+            : 'Pendente',
+          entrega: order.end_date
+            ? format(new Date(order.end_date), 'dd/MM/yyyy', {
+                locale: pt,
+              })
+            : 'Pendente',
+          assinatura: order.signature,
         };
       });
 
@@ -142,8 +185,42 @@ export default function Orders() {
   }, []);
 
   return (
-    <Container title="Gerenciando Encomenda">
-      <Table key={data.id} data={data} columns={columns} />
-    </Container>
+    <>
+      <Container title="Gerenciando Encomenda">
+        <Table key={data.id} data={data} columns={columns} />
+      </Container>
+
+      <Modal open={openModal} center onClose={() => setOpenModal(!openModal)}>
+        <h3>Informações da Encomenda</h3>
+        <p>{dataRow.rua}</p>
+        <p>
+          {dataRow.cidade} - {dataRow.estado}
+        </p>
+        <p>{dataRow.cep}</p>
+
+        <hr />
+
+        <h3>Datas</h3>
+
+        <p>
+          <b>Retirada: </b>
+          {dataRow.retirada}
+        </p>
+
+        <p>
+          <b>Entrega: </b>
+          {dataRow.entrega}
+        </p>
+
+        <hr />
+
+        <h3>Assinatura do Destinatário</h3>
+        {dataRow.assinatura && (
+          <Signature>
+            <img src={dataRow.assinatura.url} alt="Signature" />
+          </Signature>
+        )}
+      </Modal>
+    </>
   );
 }
