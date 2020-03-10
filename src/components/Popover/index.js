@@ -12,6 +12,9 @@ import { Container, Option } from './styles';
 export default function Popover({
   visible,
   handleVisibleChange,
+  handleViewClick,
+  handleEditClick,
+  handleDeleteClick,
   showView,
   showEdit,
   labelDelete,
@@ -23,7 +26,7 @@ export default function Popover({
         <Container>
           {showView && (
             <div>
-              <Option type="button" onClick={() => {}}>
+              <Option type="button" onClick={handleViewClick}>
                 <img src={view} alt="View" />
                 Visualizar
               </Option>
@@ -31,14 +34,14 @@ export default function Popover({
           )}
           {showEdit && (
             <div>
-              <Option type="button" onClick={() => {}}>
+              <Option type="button" onClick={handleEditClick}>
                 <img src={edit} alt="Edit" />
                 Editar
               </Option>
             </div>
           )}
           <div>
-            <Option type="button" onClick={() => {}}>
+            <Option type="button" onClick={handleDeleteClick}>
               <img src={remove} alt="Remove" />
               {labelDelete}
             </Option>
@@ -53,6 +56,9 @@ export default function Popover({
 }
 
 Popover.defaultProps = {
+  handleViewClick: () => {},
+  handleEditClick: () => {},
+  handleDeleteClick: () => {},
   showView: true,
   showEdit: true,
   labelDelete: 'Excluir',
@@ -61,6 +67,9 @@ Popover.defaultProps = {
 Popover.propTypes = {
   visible: PropTypes.bool.isRequired,
   handleVisibleChange: PropTypes.func.isRequired,
+  handleViewClick: PropTypes.func,
+  handleEditClick: PropTypes.func,
+  handleDeleteClick: PropTypes.func,
   showView: PropTypes.bool,
   showEdit: PropTypes.bool,
   labelDelete: PropTypes.string,
