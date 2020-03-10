@@ -1,5 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+
+import Modal from 'react-responsive-modal';
 
 import api from '~/services/api';
 
@@ -10,7 +13,9 @@ import Action from '~/components/Action';
 
 export default function Problems() {
   const [data, setData] = useState([]);
+  const [dataRow, setDataRow] = useState([]);
   const [currentRow, setCurrentRow] = useState('');
+  const [openModal, setOpenModal] = useState(false);
 
   const searchWord = useSelector(state => state.search.searchWord);
 
@@ -41,6 +46,13 @@ export default function Problems() {
             handleVisibleChange={visible => setCurrentRow(visible)}
             showEdit={false}
             labelDelete="Cancelar Encomenda"
+            handleViewClick={() => {
+              if (!openModal) {
+                setOpenModal(!openModal);
+                setCurrentRow(false);
+                setDataRow(dataRender);
+              }
+            }}
           />
         </div>
       ),
@@ -90,8 +102,15 @@ export default function Problems() {
   }, []);
 
   return (
-    <Container title="Problemas na Entrega">
-      <Table key={data.id} data={data} columns={columns} />
-    </Container>
+    <>
+      <Container title="Problemas na Entrega">
+        <Table key={data.id} data={data} columns={columns} />
+      </Container>
+
+      <Modal open={openModal} center onClose={() => setOpenModal(!openModal)}>
+        <h3>VISUALIZAR PROBLEMA</h3>
+        <p>{dataRow.problema}</p>
+      </Modal>
+    </>
   );
 }
