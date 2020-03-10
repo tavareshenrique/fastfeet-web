@@ -33,4 +33,7 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
+  .styles_modal__gNwvD {
+    width: 500px;
+  }
 `;
