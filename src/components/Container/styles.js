@@ -4,6 +4,10 @@ import { darken } from 'polished';
 export const Content = styled.div`
   padding: 30px 120px 30px 120px;
 
+  h2 {
+    font-weight: bold;
+  }
+
   button {
     width: 150px;
     margin: 5px 0 0;
@@ -19,10 +23,6 @@ export const Content = styled.div`
       background: ${darken(0.3, '#816fe7')};
     }
   }
-`;
-
-export const Title = styled.h2`
-  font-weight: bold;
 `;
 
 export const HeaderBar = styled.div`
