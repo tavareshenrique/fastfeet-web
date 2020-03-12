@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { format } from 'date-fns';
@@ -18,6 +19,8 @@ import Action from '~/components/Action';
 import { Signature } from './styles';
 
 export default function Orders() {
+  const history = useHistory();
+
   const [data, setData] = useState([]);
   const [dataRow, setDataRow] = useState([]);
   const [currentRow, setCurrentRow] = useState('');
@@ -186,7 +189,10 @@ export default function Orders() {
 
   return (
     <>
-      <Container title="Gerenciando Encomenda">
+      <Container
+        title="Gerenciando Encomenda"
+        handleAdd={() => history.push('/orders/add')}
+      >
         <Table key={data.id} data={data} columns={columns} />
       </Container>
 
