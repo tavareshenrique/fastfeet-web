@@ -46,6 +46,17 @@ export const ButtonContainer = styled.div`
   }
 `;
 
+export const ButtonText = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    margin-right: 10px;
+  }
+`;
+
 export const Content = styled.div`
   height: auto;
   width: auto;
