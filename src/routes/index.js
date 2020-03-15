@@ -8,7 +8,8 @@ import Deliverymen from '~/pages/Deliverymen';
 import Recipients from '~/pages/Recipients';
 import Problems from '~/pages/Problems';
 
-import OrdersAdd from '~/pages/Orders/ordersAdd';
+import OrdersAdd from '~/pages/Orders/OrdersAdd';
+import DeliverymenAdd from '~/pages/Deliverymen/DeliverymenAdd';
 
 export default function Routes() {
   return (
@@ -17,7 +18,8 @@ export default function Routes() {
 
       <Route path="/orders" exact component={Orders} isPrivate />
       <Route path="/orders/add" component={OrdersAdd} isPrivate />
-      <Route path="/deliverymen" component={Deliverymen} isPrivate />
+      <Route path="/deliverymen" exact component={Deliverymen} isPrivate />
+      <Route path="/deliverymen/add" component={DeliverymenAdd} isPrivate />
       <Route path="/recipients" component={Recipients} isPrivate />
       <Route path="/problems" component={Problems} isPrivate />
     </Switch>
