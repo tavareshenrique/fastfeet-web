@@ -13,6 +13,8 @@ export function* ordersAdd({ payload }) {
 
     yield call(api.post, 'orders', data);
 
+    toast.success('Encomenda incluido com sucesso!');
+
     yield put(orderPostSuccess());
 
     history.push('/orders');
