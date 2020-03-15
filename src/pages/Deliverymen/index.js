@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import api from '~/services/api';
 
@@ -12,6 +13,8 @@ import Action from '~/components/Action';
 import { Photo, NoPhoto } from './styles';
 
 export default function Deliverymen() {
+  const history = useHistory();
+
   const [data, setData] = useState([]);
   const [currentRow, setCurrentRow] = useState('');
 
@@ -136,7 +139,10 @@ export default function Deliverymen() {
   }, []);
 
   return (
-    <Container title="Gerenciando Entregadores">
+    <Container
+      title="Gerenciando Entregadores"
+      handleAdd={() => history.push('/deliverymen/add')}
+    >
       <Table key={data.id} data={data} columns={columns} />
     </Container>
   );
