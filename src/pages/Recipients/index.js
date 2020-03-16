@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import api from '~/services/api';
 
@@ -10,6 +11,8 @@ import Popover from '~/components/Popover';
 import Action from '~/components/Action';
 
 export default function Recipients() {
+  const history = useHistory();
+
   const [data, setData] = useState([]);
   const [currentRow, setCurrentRow] = useState('');
 
@@ -101,7 +104,10 @@ export default function Recipients() {
   }, []);
 
   return (
-    <Container title="Gerenciando Destinatários">
+    <Container
+      title="Gerenciando Destinatários"
+      handleAdd={() => history.push('/recipients/add')}
+    >
       <Table key={data.id} data={data} columns={columns} />
     </Container>
   );
