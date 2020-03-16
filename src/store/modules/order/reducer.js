@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   loading: false,
 };
 
-export default function auth(state = INITIAL_STATE, action) {
+export default function order(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
       case '@order/ORDER_POST': {
