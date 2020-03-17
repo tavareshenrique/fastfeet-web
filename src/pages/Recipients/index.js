@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import api from '~/services/api';
+import { recipientDelete } from '~/store/modules/recipient/actions';
 
 import Container from '~/components/Container';
 import Table from '~/components/Table';
@@ -12,11 +13,13 @@ import Action from '~/components/Action';
 
 export default function Recipients() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
   const [currentRow, setCurrentRow] = useState('');
 
   const searchWord = useSelector(state => state.search.searchWord);
+  const dataRequest = useSelector(state => state.recipient.data);
 
   const columns = [
     {
@@ -50,11 +53,26 @@ export default function Recipients() {
             visible={currentRow === dataRender.id}
             handleVisibleChange={visible => setCurrentRow(visible)}
             showView={false}
+            handleDeleteClick={() => dispatch(recipientDelete(dataRender.id))}
           />
         </div>
       ),
     },
   ];
+
+  useEffect(() => {
+    if (dataRequest.data) {
+      const recipientsData = dataRequest.data.map(recipient => {
+        return {
+          id: recipient.id,
+          nome: recipient.name,
+          endereco: recipient.street,
+        };
+      });
+
+      setData(recipientsData);
+    }
+  }, [dataRequest]);
 
   useEffect(() => {
     async function fetchRecipients() {
