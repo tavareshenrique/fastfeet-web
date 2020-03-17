@@ -7,4 +7,9 @@ export const Signature = styled.div`
   justify-content: center;
 
   margin-top: 20px;
+
+  img {
+    width: auto;
+    height: 150px;
+  }
 `;

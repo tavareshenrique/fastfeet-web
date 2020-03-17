@@ -221,6 +221,7 @@ export default function Orders() {
         <hr />
 
         <h3>Assinatura do Destinatário</h3>
+
         {dataRow.assinatura && (
           <Signature>
             <img src={dataRow.assinatura.url} alt="Signature" />
