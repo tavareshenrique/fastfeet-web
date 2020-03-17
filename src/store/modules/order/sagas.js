@@ -38,7 +38,7 @@ export function* ordersDelete({ payload }) {
 
     yield call(api.delete, `orders/${idFormatted}`);
 
-    const data = yield call(api.get, `orders`);
+    const data = yield call(api.get, 'orders');
 
     toast.success('Encomenda excluida com sucesso!');
 
