@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import api from '~/services/api';
+import { deliverymanDelete } from '~/store/modules/deliveryman/actions';
 
 import Container from '~/components/Container';
 import Table from '~/components/Table';
@@ -14,11 +15,13 @@ import { Photo, NoPhoto } from './styles';
 
 export default function Deliverymen() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
   const [currentRow, setCurrentRow] = useState('');
 
   const searchWord = useSelector(state => state.search.searchWord);
+  const dataRequest = useSelector(state => state.deliveryman.data);
 
   const shortName = useCallback(name => {
     let initials = name.match(/\b\w/g) || [];
@@ -83,11 +86,27 @@ export default function Deliverymen() {
             visible={currentRow === dataRender.id}
             handleVisibleChange={visible => setCurrentRow(visible)}
             showView={false}
+            handleDeleteClick={() => dispatch(deliverymanDelete(dataRender.id))}
           />
         </div>
       ),
     },
   ];
+
+  useEffect(() => {
+    if (dataRequest.data) {
+      const deliverymenData = dataRequest.data.map(deliveryman => {
+        return {
+          id: deliveryman.id,
+          foto: deliveryman.avatar || { nameAvatar: deliveryman.name },
+          name: deliveryman.name,
+          email: deliveryman.email,
+        };
+      });
+
+      setData(deliverymenData);
+    }
+  }, [dataRequest]);
 
   useEffect(() => {
     async function fetchDeliverymen() {
