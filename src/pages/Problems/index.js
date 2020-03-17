@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Modal from 'react-responsive-modal';
 
 import api from '~/services/api';
+import { deliveryCancel } from '~/store/modules/deliveryproblem/actions';
 
 import Container from '~/components/Container';
 import Table from '~/components/Table';
@@ -12,12 +13,15 @@ import Popover from '~/components/Popover';
 import Action from '~/components/Action';
 
 export default function Problems() {
+  const dispatch = useDispatch();
+
   const [data, setData] = useState([]);
   const [dataRow, setDataRow] = useState([]);
   const [currentRow, setCurrentRow] = useState('');
   const [openModal, setOpenModal] = useState(false);
 
   const searchWord = useSelector(state => state.search.searchWord);
+  const dataRequest = useSelector(state => state.deliveryproblem.data);
 
   const columns = [
     {
@@ -53,11 +57,25 @@ export default function Problems() {
                 setDataRow(dataRender);
               }
             }}
+            handleDeleteClick={() => dispatch(deliveryCancel(dataRender.id))}
           />
         </div>
       ),
     },
   ];
+
+  useEffect(() => {
+    if (dataRequest.data) {
+      const problemsData = dataRequest.data.map(problem => {
+        return {
+          id: problem.id,
+          problema: problem.description,
+        };
+      });
+
+      setData(problemsData);
+    }
+  }, [dataRequest]);
 
   useEffect(() => {
     async function fetchProblems() {
@@ -103,7 +121,7 @@ export default function Problems() {
 
   return (
     <>
-      <Container title="Problemas na Entrega">
+      <Container title="Problemas na Entrega" showButton={false}>
         <Table key={data.id} data={data} columns={columns} />
       </Container>
 
