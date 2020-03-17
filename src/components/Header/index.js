@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { confirmAlert } from 'react-confirm-alert'; // Import
+import { confirmAlert } from 'react-confirm-alert';
 
 import { signOut } from '~/store/modules/auth/actions';
 
@@ -23,11 +23,11 @@ function Header({ location }) {
       message: 'Você realmente deseja sair do sistema?',
       buttons: [
         {
-          label: 'Yes',
+          label: 'Sim',
           onClick: () => dispatch(signOut()),
         },
         {
-          label: 'No',
+          label: 'Não',
           onClick: () => {},
         },
       ],
