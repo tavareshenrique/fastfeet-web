@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import Modal from 'react-responsive-modal';
+import { orderDelete } from '~/store/modules/order/actions';
 
 import api from '~/services/api';
 
@@ -19,6 +20,8 @@ import Action from '~/components/Action';
 import { Signature } from './styles';
 
 export default function Orders() {
+  const dispatch = useDispatch();
+
   const history = useHistory();
 
   const [data, setData] = useState([]);
@@ -27,6 +30,7 @@ export default function Orders() {
   const [openModal, setOpenModal] = useState(false);
 
   const searchWord = useSelector(state => state.search.searchWord);
+  const dataRequest = useSelector(state => state.order.data);
 
   const columns = [
     {
@@ -83,6 +87,7 @@ export default function Orders() {
                 setDataRow(dataRender);
               }
             }}
+            handleDeleteClick={() => dispatch(orderDelete(dataRender.id))}
           />
         </div>
       ),
@@ -104,6 +109,36 @@ export default function Orders() {
 
     return 'PENDENTE';
   }
+
+  useEffect(() => {
+    if (dataRequest.data) {
+      const ordersData = dataRequest.data.map(order => {
+        return {
+          id: order.id,
+          destinatario: order.recipient.name,
+          entregador: order.deliveryman.name,
+          cidade: order.recipient.city,
+          rua: order.recipient.street,
+          estado: order.recipient.state,
+          cep: order.recipient.zipcode,
+          status: orderStatus(order),
+          retirada: order.start_date
+            ? format(new Date(order.start_date), 'dd/MM/yyyy', {
+                locale: pt,
+              })
+            : 'Pendente',
+          entrega: order.end_date
+            ? format(new Date(order.end_date), 'dd/MM/yyyy', {
+                locale: pt,
+              })
+            : 'Pendente',
+          assinatura: order.signature,
+        };
+      });
+
+      setData(ordersData);
+    }
+  }, [dataRequest]);
 
   useEffect(() => {
     async function fetchOrders() {
