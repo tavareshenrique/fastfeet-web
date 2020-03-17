@@ -7,24 +7,31 @@ import SearchBar from '~/components/SearchBar';
 
 import { Content, HeaderBar } from './styles';
 
-export default function Container({ title, children, handleAdd }) {
+export default function Container({ title, children, handleAdd, showButton }) {
   return (
     <Content>
       <h2>{title}</h2>
 
-      <HeaderBar>
-        <SearchBar />
-        <button type="button" onClick={handleAdd}>
-          <FaPlus color="#FFF" size={15} /> Cadastrar
-        </button>
-      </HeaderBar>
+      {showButton && (
+        <HeaderBar>
+          <SearchBar />
+          <button type="button" onClick={handleAdd}>
+            <FaPlus color="#FFF" size={15} /> Cadastrar
+          </button>
+        </HeaderBar>
+      )}
       {children}
     </Content>
   );
 }
 
+Container.defaultProps = {
+  showButton: true,
+};
+
 Container.propTypes = {
   children: PropTypes.element.isRequired,
   title: PropTypes.string.isRequired,
   handleAdd: PropTypes.func.isRequired,
+  showButton: PropTypes.bool,
 };
