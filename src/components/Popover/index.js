@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { Popover as PopoverAntd } from 'antd';
 
+import { confirmAlert } from 'react-confirm-alert'; // Import
+
 import view from '~/assets/view.png';
 import edit from '~/assets/edit.png';
 import remove from '~/assets/remove.png';
@@ -19,6 +21,23 @@ export default function Popover({
   showEdit,
   labelDelete,
 }) {
+  function handleDelete() {
+    confirmAlert({
+      title: 'Deseja Excluir?',
+      message: 'Você realmente deseja excluir o registro?',
+      buttons: [
+        {
+          label: 'Sim',
+          onClick: () => handleDeleteClick(),
+        },
+        {
+          label: 'Não',
+          onClick: () => {},
+        },
+      ],
+    });
+  }
+
   return (
     <PopoverAntd
       placement="bottom"
@@ -41,7 +60,7 @@ export default function Popover({
             </div>
           )}
           <div>
-            <Option type="button" onClick={handleDeleteClick}>
+            <Option type="button" onClick={handleDelete}>
               <img src={remove} alt="Remove" />
               {labelDelete}
             </Option>
