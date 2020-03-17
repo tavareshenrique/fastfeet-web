@@ -31,8 +31,6 @@ export function* deliverymanAdd({ payload }) {
 }
 
 export function* deliverymanDelete({ payload }) {
-  console.tron.log('deliverymanDelete', deliverymanDelete);
-
   try {
     const { id } = payload;
 
