@@ -17,6 +17,25 @@ export function deliverymanPostFailure() {
   };
 }
 
+export function deliverymanUpdate(id, data) {
+  return {
+    type: '@deliveryman/DELIVERYMAN_UPDATE',
+    payload: { id, data },
+  };
+}
+
+export function deliverymanUpdateSuccess() {
+  return {
+    type: '@deliveryman/DELIVERYMAN_UPDATE_SUCCESS',
+  };
+}
+
+export function deliverymanUpdateFailure() {
+  return {
+    type: '@deliveryman/DELIVERYMAN_UPDATE_FAILURE',
+  };
+}
+
 export function deliverymanDelete(id) {
   return {
     type: '@deliveryman/DELIVERYMAN_DELETE',

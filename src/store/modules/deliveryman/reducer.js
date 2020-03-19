@@ -20,6 +20,18 @@ export default function deliveryman(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@deliveryman/DELIVERYMAN_UPDATE': {
+        draft.loading = true;
+        break;
+      }
+      case '@deliveryman/DELIVERYMAN_UPDATE_SUCCESS': {
+        draft.loading = false;
+        break;
+      }
+      case '@deliveryman/DELIVERYMAN_UPDATE_FAILURE': {
+        draft.loading = false;
+        break;
+      }
       case '@deliveryman/DELIVERYMAN_DELETE': {
         draft.loading = true;
         break;
