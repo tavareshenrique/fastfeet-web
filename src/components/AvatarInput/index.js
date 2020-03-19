@@ -1,13 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { useField } from '@unform/core';
+
+import Avatar from '~/components/Avatar';
 
 import api from '~/services/api';
 
-import photo from '~/assets/addphoto.png';
+import photoImg from '~/assets/addphoto.png';
 
 import { Container } from './styles';
 
-export default function AvatarInput() {
+export default function AvatarInput({
+  photo,
+  randomAvatar,
+  nameAvatar,
+  changeAvatar,
+}) {
   const { defaultValue, registerField } = useField('avatar');
 
   const [file, setFile] = useState(defaultValue && defaultValue.id);
@@ -36,16 +44,23 @@ export default function AvatarInput() {
 
     setFile(id);
     setPreview(url);
+    changeAvatar();
   }
+
+  const profilePhoto = useMemo(() => photo || photoImg, [photo]);
 
   return (
     <Container>
       <label htmlFor="avatar">
-        <img
-          src={preview || photo}
-          alt="Avatar"
-          style={{ height: '50px', width: '50px' }}
-        />
+        {!randomAvatar ? (
+          <img
+            src={preview || profilePhoto}
+            alt="Avatar"
+            style={{ height: '50px', width: '50px' }}
+          />
+        ) : (
+          <Avatar big name={nameAvatar} />
+        )}
 
         <input
           type="file"
@@ -59,3 +74,17 @@ export default function AvatarInput() {
     </Container>
   );
 }
+
+AvatarInput.defaultProps = {
+  photo: '',
+  randomAvatar: false,
+  nameAvatar: '',
+  changeAvatar: () => {},
+};
+
+AvatarInput.propTypes = {
+  photo: PropTypes.string,
+  randomAvatar: PropTypes.bool,
+  nameAvatar: PropTypes.string,
+  changeAvatar: PropTypes.func,
+};
