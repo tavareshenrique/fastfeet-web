@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import api from '~/services/api';
-import { deliverymanDelete } from '~/store/modules/deliveryman/actions';
 
 import Container from '~/components/Container';
 import Table from '~/components/Table';
@@ -15,7 +14,6 @@ import { Photo, NoPhoto } from './styles';
 
 export default function Deliverymen() {
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
   const [currentRow, setCurrentRow] = useState('');
@@ -84,9 +82,10 @@ export default function Deliverymen() {
 
           <Popover
             visible={currentRow === dataRender.id}
+            id={dataRender.id}
+            urlParam="deliverymen"
             handleVisibleChange={visible => setCurrentRow(visible)}
             showView={false}
-            handleDeleteClick={() => dispatch(deliverymanDelete(dataRender.id))}
           />
         </div>
       ),

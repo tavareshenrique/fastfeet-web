@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Modal from 'react-responsive-modal';
 
 import api from '~/services/api';
-import { deliveryCancel } from '~/store/modules/deliveryproblem/actions';
 
 import Container from '~/components/Container';
 import Table from '~/components/Table';
@@ -13,8 +12,6 @@ import Popover from '~/components/Popover';
 import Action from '~/components/Action';
 
 export default function Problems() {
-  const dispatch = useDispatch();
-
   const [data, setData] = useState([]);
   const [dataRow, setDataRow] = useState([]);
   const [currentRow, setCurrentRow] = useState('');
@@ -47,9 +44,11 @@ export default function Problems() {
 
           <Popover
             visible={currentRow === dataRender.id}
-            handleVisibleChange={visible => setCurrentRow(visible)}
+            id={dataRender.id}
             showEdit={false}
+            urlParam="problems"
             labelDelete="Cancelar Encomenda"
+            handleVisibleChange={visible => setCurrentRow(visible)}
             handleViewClick={() => {
               if (!openModal) {
                 setOpenModal(!openModal);
@@ -57,7 +56,6 @@ export default function Problems() {
                 setDataRow(dataRender);
               }
             }}
-            handleDeleteClick={() => dispatch(deliveryCancel(dataRender.id))}
           />
         </div>
       ),

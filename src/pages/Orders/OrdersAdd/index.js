@@ -12,6 +12,7 @@ import { orderPost } from '~/store/modules/order/actions';
 import api from '~/services/api';
 
 import Input from '~/components/Input';
+import AsyncSelect from '~/components/AsyncSelect';
 
 import {
   Container,
@@ -105,15 +106,19 @@ export default function OrdersAdd() {
 
           <Row>
             <Col span={12}>
-              <Input
+              <AsyncSelect
                 label="Destinatário"
+                error
+                fieldName="deliveryman"
                 data={dataRecipient}
                 setValue={id => setRecipientId(id)}
               />
             </Col>
             <Col span={12}>
-              <Input
+              <AsyncSelect
                 label="Entregador"
+                error
+                fieldName="recipient"
                 data={dataDeliverymen}
                 setValue={id => setDeliverymanId(id)}
               />

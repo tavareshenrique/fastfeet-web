@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import Modal from 'react-responsive-modal';
-import { orderDelete } from '~/store/modules/order/actions';
 
 import api from '~/services/api';
 
@@ -20,8 +19,6 @@ import Action from '~/components/Action';
 import { Signature } from './styles';
 
 export default function Orders() {
-  const dispatch = useDispatch();
-
   const history = useHistory();
 
   const [data, setData] = useState([]);
@@ -79,6 +76,8 @@ export default function Orders() {
 
           <Popover
             visible={currentRow === dataRender.id}
+            id={dataRender.id}
+            urlParam="orders"
             handleVisibleChange={visible => setCurrentRow(visible)}
             handleViewClick={() => {
               if (!openModal) {
@@ -87,7 +86,6 @@ export default function Orders() {
                 setDataRow(dataRender);
               }
             }}
-            handleDeleteClick={() => dispatch(orderDelete(dataRender.id))}
           />
         </div>
       ),

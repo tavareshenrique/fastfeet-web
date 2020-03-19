@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import api from '~/services/api';
-import { recipientDelete } from '~/store/modules/recipient/actions';
 
 import Container from '~/components/Container';
 import Table from '~/components/Table';
@@ -13,7 +12,6 @@ import Action from '~/components/Action';
 
 export default function Recipients() {
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
   const [currentRow, setCurrentRow] = useState('');
@@ -51,9 +49,10 @@ export default function Recipients() {
 
           <Popover
             visible={currentRow === dataRender.id}
+            id={dataRender.id}
+            urlParam="recipients"
             handleVisibleChange={visible => setCurrentRow(visible)}
             showView={false}
-            handleDeleteClick={() => dispatch(recipientDelete(dataRender.id))}
           />
         </div>
       ),
