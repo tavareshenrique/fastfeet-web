@@ -1,9 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { Popover as PopoverAntd } from 'antd';
 
-import { confirmAlert } from 'react-confirm-alert'; // Import
+import { confirmAlert } from 'react-confirm-alert';
+import { removeChar } from '~/utils/removeChar';
+
+import { orderDelete } from '~/store/modules/order/actions';
+import { recipientDelete } from '~/store/modules/recipient/actions';
+import { deliverymanDelete } from '~/store/modules/deliveryman/actions';
+import { deliveryCancel } from '~/store/modules/deliveryproblem/actions';
 
 import view from '~/assets/view.png';
 import edit from '~/assets/edit.png';
@@ -13,14 +21,40 @@ import { Container, Option } from './styles';
 
 export default function Popover({
   visible,
+  id,
+  urlParam,
   handleVisibleChange,
   handleViewClick,
-  handleEditClick,
-  handleDeleteClick,
   showView,
   showEdit,
   labelDelete,
 }) {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  function setDispatch() {
+    switch (urlParam) {
+      case 'orders': {
+        dispatch(orderDelete(id));
+        break;
+      }
+      case 'recipients': {
+        dispatch(recipientDelete(id));
+        break;
+      }
+      case 'deliverymen': {
+        dispatch(deliverymanDelete(id));
+        break;
+      }
+      case 'problems': {
+        dispatch(deliveryCancel(id));
+        break;
+      }
+
+      default:
+    }
+  }
+
   function handleDelete() {
     confirmAlert({
       title: 'Deseja Excluir?',
@@ -28,7 +62,7 @@ export default function Popover({
       buttons: [
         {
           label: 'Sim',
-          onClick: () => handleDeleteClick(),
+          onClick: () => setDispatch(),
         },
         {
           label: 'Não',
@@ -36,6 +70,10 @@ export default function Popover({
         },
       ],
     });
+  }
+
+  function handleEdit() {
+    history.push(`${urlParam}/edit/${removeChar(id)}`);
   }
 
   return (
@@ -53,7 +91,7 @@ export default function Popover({
           )}
           {showEdit && (
             <div>
-              <Option type="button" onClick={handleEditClick}>
+              <Option type="button" onClick={handleEdit}>
                 <img src={edit} alt="Edit" />
                 Editar
               </Option>
@@ -75,8 +113,8 @@ export default function Popover({
 }
 
 Popover.defaultProps = {
+  id: '0',
   handleViewClick: () => {},
-  handleEditClick: () => {},
   handleDeleteClick: () => {},
   showView: true,
   showEdit: true,
@@ -85,10 +123,10 @@ Popover.defaultProps = {
 
 Popover.propTypes = {
   visible: PropTypes.bool.isRequired,
+  id: PropTypes.string,
+  urlParam: PropTypes.string.isRequired,
   handleVisibleChange: PropTypes.func.isRequired,
   handleViewClick: PropTypes.func,
-  handleEditClick: PropTypes.func,
-  handleDeleteClick: PropTypes.func,
   showView: PropTypes.bool,
   showEdit: PropTypes.bool,
   labelDelete: PropTypes.string,
