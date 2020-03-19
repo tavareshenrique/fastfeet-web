@@ -44,7 +44,7 @@ export function* ordersUpdate({ payload }) {
 
     history.push('/orders');
   } catch (err) {
-    toast.error('Falha ao alterada a encomenda!');
+    toast.error('Falha ao alterar a encomenda!');
     yield put(orderUpdateFailure());
   }
 }
@@ -72,6 +72,6 @@ export function* ordersDelete({ payload }) {
 
 export default all([
   takeLatest('@order/ORDER_POST', ordersAdd),
-  takeLatest('@order/ORDER_DELETE', ordersDelete),
   takeLatest('@order/ORDER_UPDATE', ordersUpdate),
+  takeLatest('@order/ORDER_DELETE', ordersDelete),
 ]);
