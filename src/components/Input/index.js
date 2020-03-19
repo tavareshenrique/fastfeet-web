@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useField } from '@unform/core';
 
-import { Container, LabelContainer, Error, AsyncSelect } from './styles';
+import { Container, LabelContainer, Error } from './styles';
 
-export default function Input({ name, label, data, setValue, ...rest }) {
+export default function Input({ name, label, ...rest }) {
   const inputRef = useRef(null);
 
   const { fieldName, defaultValue = '', registerField, error } = useField(name);
@@ -17,58 +17,27 @@ export default function Input({ name, label, data, setValue, ...rest }) {
     });
   }, [fieldName, registerField]);
 
-  const filter = useCallback(
-    inputValue => {
-      return data.filter(i =>
-        i.label.toLowerCase().includes(inputValue.toLowerCase())
-      );
-    },
-    [data]
-  );
-
-  const promiseOptions = inputValue =>
-    new Promise(resolve => {
-      setTimeout(() => {
-        resolve(filter(inputValue));
-      }, 1000);
-    });
-
   return (
     <Container>
       <LabelContainer>
         {label && <label htmlFor={fieldName}>{label}</label>}
         {error && <Error>* {error}</Error>}
       </LabelContainer>
-
-      {data.length <= 0 ? (
-        <input
-          ref={inputRef}
-          id={fieldName}
-          defaultValue={defaultValue}
-          {...rest}
-        />
-      ) : (
-        <AsyncSelect
-          cacheOptions
-          defaultOptions={data}
-          loadOptions={promiseOptions}
-          onChange={inputValue => setValue(inputValue.value)}
-        />
-      )}
+      <input
+        ref={inputRef}
+        id={fieldName}
+        defaultValue={defaultValue}
+        {...rest}
+      />
     </Container>
   );
 }
 
 Input.defaultProps = {
-  data: [],
-  name: '',
-  label: '',
-  setValue: () => {},
+  label: null,
 };
 
 Input.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  data: PropTypes.arrayOf(PropTypes.object),
-  setValue: PropTypes.func,
 };
