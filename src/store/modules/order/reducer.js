@@ -20,6 +20,18 @@ export default function order(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@order/ORDER_UPDATE': {
+        draft.loading = true;
+        break;
+      }
+      case '@order/ORDER_UPDATE_SUCCESS': {
+        draft.loading = false;
+        break;
+      }
+      case '@order/ORDER_UPDATE_FAILURE': {
+        draft.loading = false;
+        break;
+      }
       case '@order/ORDER_DELETE': {
         draft.loading = true;
         break;

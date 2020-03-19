@@ -11,6 +11,8 @@ import {
   orderPostFailure,
   orderDeleteSuccess,
   orderDeleteFailure,
+  orderUpdateSuccess,
+  orderUpdateFailure,
 } from './actions';
 
 export function* ordersAdd({ payload }) {
@@ -27,6 +29,23 @@ export function* ordersAdd({ payload }) {
   } catch (err) {
     toast.error('Falha ao incluir uma encomenda!');
     yield put(orderPostFailure());
+  }
+}
+
+export function* ordersUpdate({ payload }) {
+  try {
+    const { data, id } = payload;
+
+    yield call(api.put, `orders/${id}`, data);
+
+    toast.success('Encomenda alterada com sucesso!');
+
+    yield put(orderUpdateSuccess());
+
+    history.push('/orders');
+  } catch (err) {
+    toast.error('Falha ao alterada a encomenda!');
+    yield put(orderUpdateFailure());
   }
 }
 
@@ -54,4 +73,5 @@ export function* ordersDelete({ payload }) {
 export default all([
   takeLatest('@order/ORDER_POST', ordersAdd),
   takeLatest('@order/ORDER_DELETE', ordersDelete),
+  takeLatest('@order/ORDER_UPDATE', ordersUpdate),
 ]);

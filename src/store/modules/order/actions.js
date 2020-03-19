@@ -17,6 +17,25 @@ export function orderPostFailure() {
   };
 }
 
+export function orderUpdate(id, data) {
+  return {
+    type: '@order/ORDER_UPDATE',
+    payload: { id, data },
+  };
+}
+
+export function orderUpdateSuccess() {
+  return {
+    type: '@order/ORDER_UPDATE_SUCCESS',
+  };
+}
+
+export function orderUpdateFailure() {
+  return {
+    type: '@order/ORDER_UPDATE_FAILURE',
+  };
+}
+
 export function orderDelete(id) {
   return {
     type: '@order/ORDER_DELETE',

@@ -12,13 +12,16 @@ import OrdersAdd from '~/pages/Orders/OrdersAdd';
 import DeliverymenAdd from '~/pages/Deliverymen/DeliverymenAdd';
 import RecipientsAdd from '~/pages/Recipients/RecipientsAdd';
 
+import OrdersEdit from '~/pages/Orders/OrdersEdit';
+
 export default function Routes() {
   return (
     <Switch>
       <Route path="/" exact component={SignIn} />
 
       <Route path="/orders" exact component={Orders} isPrivate />
-      <Route path="/orders/add" component={OrdersAdd} isPrivate />
+      <Route path="/orders/add" exact component={OrdersAdd} isPrivate />
+      <Route path="/orders/edit/:id" exact component={OrdersEdit} isPrivate />
       <Route path="/deliverymen" exact component={Deliverymen} isPrivate />
       <Route path="/deliverymen/add" component={DeliverymenAdd} isPrivate />
       <Route path="/recipients" exact component={Recipients} isPrivate />
