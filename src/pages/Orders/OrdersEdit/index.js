@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { Row, Col } from 'antd';
 import { Form } from '@unform/web';
@@ -23,9 +23,10 @@ import {
   ButtonText,
 } from './styles';
 
-export default function OrdersEdit({ match }) {
+export default function OrdersEdit() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { id } = useParams();
 
   const loading = useSelector(state => state.order.loading);
 
@@ -72,8 +73,6 @@ export default function OrdersEdit({ match }) {
 
   useEffect(() => {
     async function fetchOrder() {
-      const { id } = match.params;
-
       const response = await api.get(`/orders/${id}`);
 
       setData(response.data);
@@ -82,11 +81,9 @@ export default function OrdersEdit({ match }) {
     }
 
     fetchOrder();
-  }, [match.params]);
+  }, [id]);
 
   function handleSubmit({ product }) {
-    const { id } = match.params;
-
     dispatch(
       orderUpdate(id, {
         product,
@@ -131,7 +128,7 @@ export default function OrdersEdit({ match }) {
                 fieldName="recipient"
                 data={dataRecipient}
                 defaultId={recipientId}
-                setValue={id => setRecipientId(id)}
+                setValue={idRecipient => setRecipientId(idRecipient)}
               />
             </Col>
 
@@ -142,7 +139,7 @@ export default function OrdersEdit({ match }) {
                 fieldName="deliveryman"
                 data={dataDeliverymen}
                 defaultId={deliverymanId}
-                setValue={id => setDeliverymanId(id)}
+                setValue={idDeliveryman => setDeliverymanId(idDeliveryman)}
               />
             </Col>
           </Row>
@@ -162,11 +159,3 @@ export default function OrdersEdit({ match }) {
     </Container>
   );
 }
-
-OrdersEdit.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string,
-    }),
-  }).isRequired,
-};
