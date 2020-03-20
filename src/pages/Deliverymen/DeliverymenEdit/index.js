@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import * as Yup from 'yup';
 
 import { Row, Col } from 'antd';
 import { Form } from '@unform/web';
@@ -27,6 +27,7 @@ import {
 export default function DeliverymenEdit() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const formRef = useRef(null);
   const { id } = useParams();
 
   const loading = useSelector(state => state.order.loading);
@@ -75,26 +76,56 @@ export default function DeliverymenEdit() {
     showAvatar();
   }, [data]);
 
-  function handleSubmit({ name, email, avatar_id }) {
-    let avatarId;
+  async function handleSubmit(dataSubmit, { reset }) {
+    const { name, email, avatar_id } = dataSubmit;
 
-    if (!avatar_id && !data.avatar_id) {
-      avatarId = null;
-    } else if (avatar_id && !data.avatar_id) {
-      avatarId = avatar_id;
-    } else if (!avatar_id && data.avatar_id) {
-      avatarId = data.avatar_id;
-    } else if (avatar_id && data.avatar_id) {
-      avatarId = avatar_id;
+    try {
+      const schema = Yup.object().shape({
+        name: Yup.string().required('O nome é obrigatório'),
+        email: Yup.string()
+          .email('Email inválido')
+          .required('O email é obrigatório'),
+      });
+
+      await schema.validate(dataSubmit, {
+        abortEarly: false,
+      });
+
+      formRef.current.setErrors({});
+
+      let avatarId;
+      if (!avatar_id && !data.avatar_id) {
+        avatarId = null;
+      } else if (avatar_id && !data.avatar_id) {
+        avatarId = avatar_id;
+      } else if (!avatar_id && data.avatar_id) {
+        avatarId = data.avatar_id;
+      } else if (avatar_id && data.avatar_id) {
+        avatarId = avatar_id;
+      }
+
+      dispatch(
+        deliverymanUpdate(id, {
+          name,
+          email,
+          avatar_id: avatarId,
+        })
+      );
+
+      reset();
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errorMessages = {};
+
+        err.inner.forEach(error => {
+          errorMessages[error.path] = error.message;
+        });
+
+        console.tron.log('errorMessages', errorMessages);
+
+        formRef.current.setErrors(errorMessages);
+      }
     }
-
-    dispatch(
-      deliverymanUpdate(id, {
-        name,
-        email,
-        avatar_id: avatarId,
-      })
-    );
   }
 
   function handleAvatar() {
@@ -106,7 +137,7 @@ export default function DeliverymenEdit() {
   return (
     <Container>
       <Content>
-        <Form onSubmit={handleSubmit} initialData={data}>
+        <Form ref={formRef} onSubmit={handleSubmit} initialData={data}>
           <HeaderBar>
             <h1>Alteração de Entregador</h1>
 

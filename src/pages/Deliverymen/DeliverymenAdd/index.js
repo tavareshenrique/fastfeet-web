@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
 
 import { Row, Col } from 'antd';
 import { Form } from '@unform/web';
@@ -23,19 +24,48 @@ import {
 
 export default function DeliverymenAdd() {
   const dispatch = useDispatch();
-
   const history = useHistory();
+  const formRef = useRef(null);
 
   const loading = useSelector(state => state.order.loading);
 
-  function handleSubmit(data) {
-    dispatch(deliverymanPost(data));
+  async function handleSubmit(dataSubmit, { reset }) {
+    try {
+      const schema = Yup.object().shape({
+        name: Yup.string().required('O nome é obrigatório'),
+        email: Yup.string()
+          .email('Email inválido')
+          .required('O email é obrigatório'),
+      });
+
+      await schema.validate(dataSubmit, {
+        abortEarly: false,
+      });
+
+      formRef.current.setErrors({});
+
+      dispatch(deliverymanPost(dataSubmit));
+
+      reset();
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errorMessages = {};
+
+        err.inner.forEach(error => {
+          errorMessages[error.path] = error.message;
+        });
+
+        console.tron.log('errorMessages', errorMessages);
+
+        formRef.current.setErrors(errorMessages);
+      }
+    }
   }
 
   return (
     <Container>
       <Content>
-        <Form onSubmit={handleSubmit}>
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <HeaderBar>
             <h1>Cadastro de Entregadores</h1>
 
