@@ -20,6 +20,18 @@ export default function recipient(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@recipient/RECIPIENT_UPDATE': {
+        draft.loading = true;
+        break;
+      }
+      case '@recipient/RECIPIENT_UPDATE_SUCCESS': {
+        draft.loading = false;
+        break;
+      }
+      case '@recipient/RECIPIENT_UPDATE_FAILURE': {
+        draft.loading = false;
+        break;
+      }
       case '@recipient/RECIPIENT_DELETE': {
         draft.loading = true;
         break;

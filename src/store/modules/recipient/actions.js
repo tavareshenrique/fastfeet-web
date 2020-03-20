@@ -17,6 +17,25 @@ export function recipientPostFailure() {
   };
 }
 
+export function recipientUpdate(id, data) {
+  return {
+    type: '@recipient/RECIPIENT_UPDATE',
+    payload: { id, data },
+  };
+}
+
+export function recipientUpdateSuccess() {
+  return {
+    type: '@recipient/RECIPIENT_UPDATE_SUCCESS',
+  };
+}
+
+export function recipientUpdateFailure() {
+  return {
+    type: '@recipient/RECIPIENT_UPDATE_FAILURE',
+  };
+}
+
 export function recipientDelete(id) {
   return {
     type: '@recipient/RECIPIENT_DELETE',

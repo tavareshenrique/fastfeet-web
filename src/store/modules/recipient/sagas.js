@@ -9,6 +9,8 @@ import api from '~/services/api';
 import {
   recipientPostSuccess,
   recipientPostFailure,
+  recipientUpdateSuccess,
+  recipientUpdateFailure,
   recipientDeleteSuccess,
   recipientDeleteFailure,
 } from './actions';
@@ -27,6 +29,23 @@ export function* recipientAdd({ payload }) {
   } catch (err) {
     toast.error('Falha ao incluir uma destinatário(a)!');
     yield put(recipientPostFailure());
+  }
+}
+
+export function* recipientUpdate({ payload }) {
+  try {
+    const { data, id } = payload;
+
+    yield call(api.put, `recipients/${id}`, data);
+
+    toast.success('Destinatário(a) alterado(a) com sucesso!');
+
+    yield put(recipientUpdateSuccess());
+
+    history.push('/recipients');
+  } catch (err) {
+    toast.error('Falha ao alterar o(a) destinatário(a)!');
+    yield put(recipientUpdateFailure());
   }
 }
 
@@ -55,5 +74,6 @@ export function* recipientDelete({ payload }) {
 
 export default all([
   takeLatest('@recipient/RECIPIENT_POST', recipientAdd),
+  takeLatest('@recipient/RECIPIENT_UPDATE', recipientUpdate),
   takeLatest('@recipient/RECIPIENT_DELETE', recipientDelete),
 ]);

@@ -14,6 +14,7 @@ import RecipientsAdd from '~/pages/Recipients/RecipientsAdd';
 
 import OrdersEdit from '~/pages/Orders/OrdersEdit';
 import DeliverymenEdit from '~/pages/Deliverymen/DeliverymenEdit';
+import RecipientsEdit from '~/pages/Recipients/RecipientsEdit';
 
 export default function Routes() {
   return (
@@ -32,6 +33,7 @@ export default function Routes() {
       />
       <Route path="/recipients" exact component={Recipients} isPrivate />
       <Route path="/recipients/add" component={RecipientsAdd} isPrivate />
+      <Route path="/recipients/edit/:id" component={RecipientsEdit} isPrivate />
       <Route path="/problems" component={Problems} isPrivate />
     </Switch>
   );
