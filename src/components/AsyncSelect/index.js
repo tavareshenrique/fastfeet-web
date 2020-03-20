@@ -52,7 +52,7 @@ AsyncSelect.defaultProps = {
 AsyncSelect.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   label: PropTypes.string.isRequired,
-  error: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
   fieldName: PropTypes.string.isRequired,
   defaultId: PropTypes.number,
   setValue: PropTypes.func.isRequired,

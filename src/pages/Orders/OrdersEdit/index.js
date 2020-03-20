@@ -37,8 +37,8 @@ export default function OrdersEdit() {
   const [dataRecipient, setDataRecipient] = useState([]);
   const [dataDeliverymen, setDataDeliverymen] = useState([]);
 
-  const [recipientId, setRecipientId] = useState('');
-  const [deliverymanId, setDeliverymanId] = useState('');
+  const [recipientId, setRecipientId] = useState(-1);
+  const [deliverymanId, setDeliverymanId] = useState(-1);
 
   const [recipientError, setRecipientError] = useState('');
   const [deliverymanError, setDeliverymanError] = useState('');

@@ -7,7 +7,7 @@ import SearchBar from '~/components/SearchBar';
 
 import { Content, HeaderBar } from './styles';
 
-export default function Container({ title, children, handleAdd, showButton }) {
+export default function Container({ title, children, showButton, handleAdd }) {
   return (
     <Content>
       <h2>{title}</h2>
@@ -27,11 +27,12 @@ export default function Container({ title, children, handleAdd, showButton }) {
 
 Container.defaultProps = {
   showButton: true,
+  handleAdd: () => {},
 };
 
 Container.propTypes = {
   children: PropTypes.element.isRequired,
   title: PropTypes.string.isRequired,
-  handleAdd: PropTypes.func.isRequired,
   showButton: PropTypes.bool,
+  handleAdd: PropTypes.func,
 };
