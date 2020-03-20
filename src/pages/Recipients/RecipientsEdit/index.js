@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import axios from 'axios';
-
 import { Row, Col } from 'antd';
 import { Form } from '@unform/web';
 import { FaCheck, FaChevronLeft } from 'react-icons/fa';
 import { BounceLoader } from 'react-spinners';
 import LoadingOverlay from 'react-loading-overlay';
+import { removeChar } from '~/utils/removeChar';
 
 import { recipientUpdate } from '~/store/modules/recipient/actions';
+import { requestAddress } from '~/store/modules/address/actions';
 
 import api from '~/services/api';
 
@@ -32,32 +32,34 @@ export default function RecipientsAdd() {
   const { id } = useParams();
 
   const loading = useSelector(state => state.order.loading);
+  const loadingAddress = useSelector(state => state.address.loading);
+  const dataAddress = useSelector(state => state.address.data);
 
   const [data, setData] = useState([]);
 
-  const [loadingAddress, setLoadingAddress] = useState(false);
+  useEffect(() => {
+    const { id: idRecipient, name } = data;
 
-  async function loadCep(cep) {
-    if (cep.length === 8) {
-      setLoadingAddress(true);
-      const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-
-      const { id: idRecipient, name } = data;
-
+    if (dataAddress !== []) {
       setData({
         id: idRecipient,
         name,
         number: '',
         complement: '',
-        street: response.data.logradouro,
-        zipcode: response.data.cep,
-        city: response.data.localidade,
-        state: response.data.uf,
+        street: dataAddress.street,
+        zipcode: dataAddress.zipcode,
+        city: dataAddress.city,
+        state: dataAddress.state,
       });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataAddress]);
 
-      setTimeout(() => {
-        setLoadingAddress(false);
-      }, 1200);
+  async function loadCep(zipcode) {
+    const zipFormatted = removeChar(zipcode, '-');
+
+    if (zipFormatted.length === 8) {
+      dispatch(requestAddress(zipFormatted));
     }
   }
 
@@ -122,6 +124,7 @@ export default function RecipientsAdd() {
   return (
     <LoadingOverlay active={loadingAddress} spinner text="Buscando endereço...">
       <Container>
+        {console.tron.log('dataAddress', dataAddress)}
         <Content>
           <Form ref={formRef} onSubmit={handleSubmit} initialData={data}>
             <HeaderBar>

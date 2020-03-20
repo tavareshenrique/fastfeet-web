@@ -1,17 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
-
-import axios from 'axios';
 
 import { Row, Col } from 'antd';
 import { Form } from '@unform/web';
 import { FaCheck, FaChevronLeft } from 'react-icons/fa';
 import { BounceLoader } from 'react-spinners';
 import LoadingOverlay from 'react-loading-overlay';
+import { removeChar } from '~/utils/removeChar';
 
 import { recipientPost } from '~/store/modules/recipient/actions';
+import { requestAddress } from '~/store/modules/address/actions';
 
 import Input from '~/components/Input';
 
@@ -29,25 +29,14 @@ export default function RecipientsAdd() {
   const formRef = useRef(null);
 
   const loading = useSelector(state => state.order.loading);
+  const loadingAddress = useSelector(state => state.address.loading);
+  const dataAddress = useSelector(state => state.address.data);
 
-  const [dataAddress, setDataAddress] = useState([]);
-  const [loadingAddress, setLoadingAddress] = useState(false);
+  async function loadCep(zipcode) {
+    const zipFormatted = removeChar(zipcode, '-');
 
-  async function loadCep(cep) {
-    if (cep.length === 8) {
-      setLoadingAddress(true);
-      const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-
-      setDataAddress({
-        street: response.data.logradouro,
-        zipcode: response.data.cep,
-        city: response.data.localidade,
-        state: response.data.uf,
-      });
-
-      setTimeout(() => {
-        setLoadingAddress(false);
-      }, 1200);
+    if (zipFormatted.length === 8) {
+      dispatch(requestAddress(zipFormatted));
     }
   }
 

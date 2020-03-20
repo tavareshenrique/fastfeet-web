@@ -5,6 +5,12 @@ export const Container = styled.div`
   flex-direction: column;
 
   margin: 5px;
+
+  input {
+    ::placeholder {
+      color: #c4c4c4 !important;
+    }
+  }
 `;
 
 export const LabelContainer = styled.div`

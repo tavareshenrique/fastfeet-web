@@ -1,3 +1,3 @@
-export function removeChar(char) {
-  return char.replace('#', '');
+export function removeChar(str, char = '#') {
+  return str.replace(char, '');
 }
