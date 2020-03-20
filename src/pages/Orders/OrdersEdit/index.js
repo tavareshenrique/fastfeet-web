@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import * as Yup from 'yup';
 
 import { Row, Col } from 'antd';
 import { Form } from '@unform/web';
@@ -26,6 +27,7 @@ import {
 export default function OrdersEdit() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const formRef = useRef(null);
   const { id } = useParams();
 
   const loading = useSelector(state => state.order.loading);
@@ -37,6 +39,9 @@ export default function OrdersEdit() {
 
   const [recipientId, setRecipientId] = useState('');
   const [deliverymanId, setDeliverymanId] = useState('');
+
+  const [recipientError, setRecipientError] = useState('');
+  const [deliverymanError, setDeliverymanError] = useState('');
 
   useEffect(() => {
     async function fetchRecipient() {
@@ -83,20 +88,70 @@ export default function OrdersEdit() {
     fetchOrder();
   }, [id]);
 
-  function handleSubmit({ product }) {
-    dispatch(
-      orderUpdate(id, {
-        product,
-        recipient_id: deliverymanId,
-        deliveryman_id: recipientId,
-      })
-    );
+  function validateAsynFields() {
+    if (recipientId === '') {
+      setRecipientError('Destinatário obrigatório');
+    } else {
+      setRecipientError('');
+    }
+
+    if (deliverymanId === '') {
+      setDeliverymanError('Entregador obrigatório');
+    } else {
+      setDeliverymanError('');
+    }
+
+    if (recipientId === '' || deliverymanId === '') {
+      return true;
+    }
+
+    return false;
+  }
+
+  async function handleSubmit(dataSubmit, { reset }) {
+    const { product } = dataSubmit;
+
+    try {
+      const schema = Yup.object().shape({
+        product: Yup.string().required('O produto é obrigatório'),
+      });
+
+      if (validateAsynFields()) return;
+
+      await schema.validate(dataSubmit, {
+        abortEarly: false,
+      });
+
+      formRef.current.setErrors({});
+
+      dispatch(
+        orderUpdate(id, {
+          product,
+          recipient_id: recipientId,
+          deliveryman_id: deliverymanId,
+        })
+      );
+
+      reset();
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errorMessages = {};
+
+        err.inner.forEach(error => {
+          errorMessages[error.path] = error.message;
+        });
+
+        console.tron.log('errorMessages', errorMessages);
+
+        formRef.current.setErrors(errorMessages);
+      }
+    }
   }
 
   return (
     <Container>
       <Content>
-        <Form onSubmit={handleSubmit} initialData={data}>
+        <Form ref={formRef} onSubmit={handleSubmit} initialData={data}>
           <HeaderBar>
             <h1>Alteração de Encomendas</h1>
 
@@ -124,7 +179,7 @@ export default function OrdersEdit() {
             <Col span={12}>
               <AsyncSelect
                 label="Destinatário"
-                error
+                error={recipientError}
                 fieldName="recipient"
                 data={dataRecipient}
                 defaultId={recipientId}
@@ -135,7 +190,7 @@ export default function OrdersEdit() {
             <Col span={12}>
               <AsyncSelect
                 label="Entregador"
-                error
+                error={deliverymanError}
                 fieldName="deliveryman"
                 data={dataDeliverymen}
                 defaultId={deliverymanId}
