@@ -125,8 +125,6 @@ export default function OrdersAdd() {
           errorMessages[error.path] = error.message;
         });
 
-        console.tron.log('errorMessages', errorMessages);
-
         formRef.current.setErrors(errorMessages);
       }
     }
