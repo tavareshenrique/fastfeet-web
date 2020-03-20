@@ -124,7 +124,6 @@ export default function RecipientsAdd() {
   return (
     <LoadingOverlay active={loadingAddress} spinner text="Buscando endereço...">
       <Container>
-        {console.tron.log('dataAddress', dataAddress)}
         <Content>
           <Form ref={formRef} onSubmit={handleSubmit} initialData={data}>
             <HeaderBar>
