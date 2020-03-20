@@ -15,7 +15,7 @@ import {
   recipientDeleteFailure,
 } from './actions';
 
-export function* recipientAdd({ payload }) {
+export function* recipientPost({ payload }) {
   try {
     const { data } = payload;
 
@@ -73,7 +73,7 @@ export function* recipientDelete({ payload }) {
 }
 
 export default all([
-  takeLatest('@recipient/RECIPIENT_POST', recipientAdd),
+  takeLatest('@recipient/RECIPIENT_POST', recipientPost),
   takeLatest('@recipient/RECIPIENT_UPDATE', recipientUpdate),
   takeLatest('@recipient/RECIPIENT_DELETE', recipientDelete),
 ]);

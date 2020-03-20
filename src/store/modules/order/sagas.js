@@ -15,7 +15,7 @@ import {
   orderUpdateFailure,
 } from './actions';
 
-export function* ordersAdd({ payload }) {
+export function* ordersPost({ payload }) {
   try {
     const { data } = payload;
 
@@ -71,7 +71,7 @@ export function* ordersDelete({ payload }) {
 }
 
 export default all([
-  takeLatest('@order/ORDER_POST', ordersAdd),
+  takeLatest('@order/ORDER_POST', ordersPost),
   takeLatest('@order/ORDER_UPDATE', ordersUpdate),
   takeLatest('@order/ORDER_DELETE', ordersDelete),
 ]);

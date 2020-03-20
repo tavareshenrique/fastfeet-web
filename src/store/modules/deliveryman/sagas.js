@@ -15,7 +15,7 @@ import {
   deliverymanDeleteFailure,
 } from './actions';
 
-export function* deliverymanAdd({ payload }) {
+export function* deliverymanPost({ payload }) {
   try {
     const { data } = payload;
 
@@ -71,7 +71,7 @@ export function* deliverymanDelete({ payload }) {
 }
 
 export default all([
-  takeLatest('@deliveryman/DELIVERYMAN_POST', deliverymanAdd),
+  takeLatest('@deliveryman/DELIVERYMAN_POST', deliverymanPost),
   takeLatest('@deliveryman/DELIVERYMAN_UPDATE', deliverymanUpdate),
   takeLatest('@deliveryman/DELIVERYMAN_DELETE', deliverymanDelete),
 ]);
