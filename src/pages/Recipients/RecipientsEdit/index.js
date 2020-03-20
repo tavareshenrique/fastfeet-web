@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import * as Yup from 'yup';
 
 import axios from 'axios';
 
@@ -27,6 +28,7 @@ import {
 export default function RecipientsAdd() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const formRef = useRef(null);
   const { id } = useParams();
 
   const loading = useSelector(state => state.order.loading);
@@ -84,15 +86,44 @@ export default function RecipientsAdd() {
     fectRecipient();
   }, [id]);
 
-  function handleSubmit(dataSubmit) {
-    dispatch(recipientUpdate(id, dataSubmit));
+  async function handleSubmit(dataSubmit, { reset }) {
+    try {
+      const schema = Yup.object().shape({
+        name: Yup.string().required('O nome é obrigatório'),
+        zipcode: Yup.string().required('O CEP é obrigatório'),
+        city: Yup.string().required('A cidade é obrigatória'),
+        state: Yup.string().required('A UF é obrigatório'),
+        street: Yup.string().required('A rua é obrigatória'),
+        number: Yup.string().required('O Nº é obrigatório'),
+      });
+
+      await schema.validate(dataSubmit, {
+        abortEarly: false,
+      });
+
+      formRef.current.setErrors({});
+
+      dispatch(recipientUpdate(id, dataSubmit));
+
+      reset();
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errorMessages = {};
+
+        err.inner.forEach(error => {
+          errorMessages[error.path] = error.message;
+        });
+
+        formRef.current.setErrors(errorMessages);
+      }
+    }
   }
 
   return (
     <LoadingOverlay active={loadingAddress} spinner text="Buscando endereço...">
       <Container>
         <Content>
-          <Form onSubmit={handleSubmit} initialData={data}>
+          <Form ref={formRef} onSubmit={handleSubmit} initialData={data}>
             <HeaderBar>
               <h1>Alteração de Entregador</h1>
 
