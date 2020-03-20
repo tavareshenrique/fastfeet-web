@@ -127,7 +127,7 @@ export default function RecipientsAdd() {
         <Content>
           <Form ref={formRef} onSubmit={handleSubmit} initialData={data}>
             <HeaderBar>
-              <h1>Alteração de Entregador</h1>
+              <h1>Alteração de Destinatário</h1>
 
               <ButtonContainer>
                 <button
