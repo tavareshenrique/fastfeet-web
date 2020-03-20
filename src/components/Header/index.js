@@ -38,7 +38,9 @@ function Header({ location }) {
     <Container>
       <Content>
         <nav>
-          <Logo src={logo} alt="FastFeet" />
+          <a href="/">
+            <Logo src={logo} alt="FastFeet" />
+          </a>
           <Menu
             page="/orders"
             pathname={location.pathname}
