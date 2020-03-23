@@ -1,36 +1,42 @@
-# FastFeet Web
+<h1 align="center">
+  <img alt="Fastfeet" title="Fastfeet" src="https://raw.githubusercontent.com/tavareshenrique/fastfeet-web/master/src/assets/fastfeet-logo%402x.png" width="300px" />
+</h1>
+
+<h3 align="center">
+  FastFeet is an app for a fictional carrier, made in ReactJS during Rocketseat's Bootcamp. This project is part of Rocketseat's Bootcamp certification.
+</h3>
+
+---
 
 ![preview](./src/assets/preview.png)
 
-FastFeet é um app para uma transportadora fictícia, feito em ReactJS durante o Bootcamp da Rocketseat. Esse projeto faz parte da certificação do Bootcamp da Rocketseat.
+## Installing and Running
 
-## Instalando e Executando
-
-Faça o clone do repositório
+Clone the repository
 
 ```
 git clone https://github.com/tavareshenrique/fastfeet-web.git
 ```
 
-Instale as dependências
+Install the dependencies
 
 ```
 yarn
 ```
 
-ou
+or
 
 ```
 npm install
 ```
 
-Rode o Back-End do FastFeet antes de executar o projeto
+Run the FastFeet Back-End before running the FastFeet Web project
 
 ```
 https://github.com/tavareshenrique/fastfeet-api
 ```
 
-Rode o projeto
+Run FastFeet Web
 
 ```
 yarn start
@@ -42,7 +48,7 @@ ou
 npm start
 ```
 
-## Construído com
+## Built with
 
 - [ReactJS](https://pt-br.reactjs.org/)
 - [React Hooks](https://pt-br.reactjs.org/docs/hooks-intro.html)
@@ -68,7 +74,7 @@ npm start
 - [yup](https://github.com/jquense/yup)
 - [React App Rewired](https://github.com/timarney/react-app-rewired)
 
-## Autor
+## Author
 
 <table>
   <tr>
