@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-  FastFeet is an app for a fictional carrier, made in ReactJS during Rocketseat's Bootcamp. This project is part of Rocketseat's Bootcamp certification.
+  FastFeet is an app for a fictional shipping company, made in ReactJS during Rocketseat's Bootcamp. This project is part of Rocketseat's Bootcamp certification.
 </h3>
 
 ---
@@ -14,41 +14,26 @@
 
 Clone the repository
 
-```
+```bash
 git clone https://github.com/tavareshenrique/fastfeet-web.git
 ```
 
-Install the dependencies
-
-```
+```bash
+# Install the dependencies
 yarn
-```
-
-or
-
-```
+# or
 npm install
-```
 
-Run the FastFeet Back-End before running the FastFeet Web project
-
-```
+# Run the FastFeet Back-End before running the FastFeet Web project
 https://github.com/tavareshenrique/fastfeet-api
-```
 
-Run FastFeet Web
-
-```
+# Run FastFeet Web
 yarn start
-```
-
-ou
-
-```
+# or
 npm start
 ```
 
-## Built with
+## Technologies
 
 - [ReactJS](https://pt-br.reactjs.org/)
 - [React Hooks](https://pt-br.reactjs.org/docs/hooks-intro.html)
