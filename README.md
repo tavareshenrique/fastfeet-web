@@ -72,6 +72,8 @@ npm start
 - [Redux Persist](https://github.com/rt2zz/redux-persist)
 - [Styled Components](https://www.styled-components.com/)
 - [yup](https://github.com/jquense/yup)
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
 - [React App Rewired](https://github.com/timarney/react-app-rewired)
 
 ## Author
