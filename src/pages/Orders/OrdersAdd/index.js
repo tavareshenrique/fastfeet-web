@@ -111,8 +111,8 @@ export default function OrdersAdd() {
       dispatch(
         orderPost({
           product,
-          recipient_id: deliverymanId,
-          deliveryman_id: recipientId,
+          recipient_id: recipientId,
+          deliveryman_id: deliverymanId,
         })
       );
 
