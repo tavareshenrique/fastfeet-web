@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-  FastFeet is an app for a fictional shipping company, made in ReactJS during Rocketseat's Bootcamp. This project is part of Rocketseat's Bootcamp certification.
+  FastFeet is an app for a fictional shipping company, developed with ReactJS during Rocketseat's Bootcamp. This project is part of Rocketseat's Bootcamp certification.
 </h3>
 
 ---
