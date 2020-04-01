@@ -11,7 +11,7 @@ import LoadingOverlay from 'react-loading-overlay';
 import { removeChar } from '~/utils/removeChar';
 
 import { recipientPost } from '~/store/modules/recipient/actions';
-import { requestAddress } from '~/store/modules/address/actions';
+import { requestAddress, resetAddress } from '~/store/modules/address/actions';
 
 import Input from '~/components/Input';
 
@@ -57,7 +57,8 @@ export default function RecipientsAdd() {
 
       formRef.current.setErrors({});
 
-      dispatch(recipientPost(dataSubmit));
+      await dispatch(recipientPost(dataSubmit));
+      await dispatch(resetAddress());
 
       reset();
     } catch (err) {

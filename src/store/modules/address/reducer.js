@@ -21,6 +21,10 @@ export default function deliveryman(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@address/RESET_ADDRESS': {
+        draft.data = [];
+        break;
+      }
       default:
     }
   });

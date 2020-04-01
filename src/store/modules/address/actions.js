@@ -17,3 +17,9 @@ export function requestAddressFailure() {
     type: '@address/ADDRESS_REQUEST_FAILURE',
   };
 }
+
+export function resetAddress() {
+  return {
+    type: '@address/RESET_ADDRESS',
+  };
+}
