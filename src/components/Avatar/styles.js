@@ -69,7 +69,7 @@ export const Container = styled.div`
       border: 2px dashed #ccc;
     `}
 
-  border-radius: 50px;
+  border-radius: 150px;
   background: ${props => secondaryColorNophoto(props.color)};
 
   span {
