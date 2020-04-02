@@ -2,6 +2,10 @@
   <img alt="Fastfeet" title="Fastfeet" src="https://raw.githubusercontent.com/tavareshenrique/fastfeet-web/master/src/assets/fastfeet-logo%402x.png" width="300px" />
 </h1>
 
+<p align="center">
+  <img alt="License" src="https://img.shields.io/github/license/tavareshenrique/fastfeet-web">
+</p>
+
 <h3 align="center">
   FastFeet is an app for a fictional shipping company, developed with ReactJS during Rocketseat's Bootcamp. This project is part of Rocketseat's Bootcamp certification.
 </h3>
