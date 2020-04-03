@@ -2,15 +2,30 @@
   <img alt="Fastfeet" title="Fastfeet" src="https://raw.githubusercontent.com/tavareshenrique/fastfeet-web/master/src/assets/fastfeet-logo%402x.png" width="300px" />
 </h1>
 
-<h3 align="center">
+<p align="center">
+  <img alt="Last commit on GitHub" src="https://img.shields.io/github/last-commit/tavareshenrique/fastfeet-web?color=7D40E7">
+  <img alt="Made by Henrique Tavares" src="https://img.shields.io/badge/made%20by-Henrique Tavares-%20?color=7D40E7">
+  <img alt="Project top programing language" src="https://img.shields.io/github/languages/top/tavareshenrique/fastfeet-web?color=7D40E7">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/tavareshenrique/fastfeet-web?color=7D40E7">
+  <img alt="GitHub license" src="https://img.shields.io/github/license/tavareshenrique/fastfeet-web?color=7D40E7">
+</p>
+
+<p align="center">
+  <a href="#information_source-how-to-use">ℹ️ How To Use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#rocket-technologies">🚀 Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#computer-author">💻 Author</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#memo-license">📝 License</a>
+</p>
+
+<p align="center">
   FastFeet is an app for a fictional shipping company, developed with ReactJS during Rocketseat's Bootcamp. This project is part of Rocketseat's Bootcamp certification.
-</h3>
+</p>
 
 ---
 
 ![preview](./src/assets/preview.png)
 
-## Installing and Running
+# :information_source: How To Use
 
 Clone the repository
 
@@ -33,7 +48,7 @@ yarn start
 npm start
 ```
 
-## Technologies
+# :rocket: Technologies
 
 - [ReactJS](https://pt-br.reactjs.org/)
 - [React Hooks](https://pt-br.reactjs.org/docs/hooks-intro.html)
@@ -61,7 +76,7 @@ npm start
 - [Prettier](https://prettier.io/)
 - [React App Rewired](https://github.com/timarney/react-app-rewired)
 
-## Author
+# :computer: Author
 
 <table>
   <tr>
@@ -74,11 +89,13 @@ npm start
         </sub>
        </a>
        <br />
-       <a href="https://github.com/tavareshenrique/FASTFEET-WEB/commits?author=tavareshenrique" title="Code">@tavareshenrique</a>
+       <a href="https://www.linkedin.com/in/tavareshenrique/" title="Linkedin">@tavareshenrique</a>
+       <br />
+       <a href="https://github.com/tavareshenrique/FASTFEET-WEB/commits?author=tavareshenrique" title="Code">💻</a>
     </td>
   </tr>
 </table>
 
-## License
+# :memo: License
 
 This project is licensed under the MIT license - see the archive [LICENSE.md](https://github.com/tavareshenrique/fastfeet-web/blob/master/LICENSE.md) for details.
