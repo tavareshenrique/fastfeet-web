@@ -1,6 +1,7 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 
 import { toast } from 'react-toastify';
+import { translateErrorMessages } from 'fastfeet-translation-errors';
 import { removeChar } from '~/utils/removeChar';
 
 import history from '~/services/history';
@@ -24,7 +25,7 @@ export function* deliveryCancel({ payload }) {
 
     history.push('/problems');
   } catch (err) {
-    toast.error('Falha ao cancelar a encomenda!');
+    toast.error(translateErrorMessages(err.response.data.error));
     yield put(deliveryCancelFailure());
   }
 }

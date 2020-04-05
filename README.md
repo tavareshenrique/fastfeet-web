@@ -75,6 +75,7 @@ npm start
 - [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
 - [React App Rewired](https://github.com/timarney/react-app-rewired)
+- [FastFeet Translation Errors](https://github.com/tavareshenrique/fastfeet-translation-errors)
 
 # :computer: Author
 

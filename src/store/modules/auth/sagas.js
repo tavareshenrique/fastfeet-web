@@ -1,6 +1,8 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
+import { translateErrorMessages } from 'fastfeet-translation-errors';
+
 import history from '~/services/history';
 import api from '~/services/api';
 
@@ -23,7 +25,7 @@ export function* signIn({ payload }) {
 
     history.push('/orders');
   } catch (err) {
-    toast.error('Falha na autenticação, verifique seus dados!');
+    toast.error(translateErrorMessages(err.response.data.error));
     yield put(signFailure());
   }
 }
@@ -41,7 +43,7 @@ export function* signUp({ payload }) {
 
     history.push('/');
   } catch (err) {
-    toast.error('Falha no cadastro, verifique seus dados!');
+    toast.error(translateErrorMessages(err.response.data.error));
 
     yield put(signFailure());
   }

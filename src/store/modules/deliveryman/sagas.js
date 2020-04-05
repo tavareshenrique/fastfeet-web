@@ -1,6 +1,7 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 
 import { toast } from 'react-toastify';
+import { translateErrorMessages } from 'fastfeet-translation-errors';
 import { removeChar } from '~/utils/removeChar';
 
 import history from '~/services/history';
@@ -27,7 +28,7 @@ export function* deliverymanPost({ payload }) {
 
     history.push('/deliverymen');
   } catch (err) {
-    toast.error('Falha ao incluir uma entregador(a)!');
+    toast.error(translateErrorMessages(err.response.data.error));
     yield put(deliverymanPostFailure());
   }
 }
@@ -44,7 +45,7 @@ export function* deliverymanUpdate({ payload }) {
 
     history.push('/deliverymen');
   } catch (err) {
-    toast.error('Falha ao alterar o(a) entregador(a)!');
+    toast.error(translateErrorMessages(err.response.data.error));
     yield put(deliverymanUpdateFailure());
   }
 }
@@ -65,7 +66,7 @@ export function* deliverymanDelete({ payload }) {
 
     history.push('/deliverymen');
   } catch (err) {
-    toast.error('Falha ao excluir uma Entregador(a)!');
+    toast.error(translateErrorMessages(err.response.data.error));
     yield put(deliverymanDeleteFailure());
   }
 }

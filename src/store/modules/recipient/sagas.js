@@ -1,6 +1,7 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 
 import { toast } from 'react-toastify';
+import { translateErrorMessages } from 'fastfeet-translation-errors';
 import { removeChar } from '~/utils/removeChar';
 
 import history from '~/services/history';
@@ -27,7 +28,7 @@ export function* recipientPost({ payload }) {
 
     history.push('/recipients');
   } catch (err) {
-    toast.error('Falha ao incluir uma destinatário(a)!');
+    toast.error(translateErrorMessages(err.response.data.error));
     yield put(recipientPostFailure());
   }
 }
@@ -44,7 +45,7 @@ export function* recipientUpdate({ payload }) {
 
     history.push('/recipients');
   } catch (err) {
-    toast.error('Falha ao alterar o(a) destinatário(a)!');
+    toast.error(translateErrorMessages(err.response.data.error));
     yield put(recipientUpdateFailure());
   }
 }
@@ -65,9 +66,7 @@ export function* recipientDelete({ payload }) {
 
     history.push('/recipients');
   } catch (err) {
-    toast.error(
-      'Falha ao excluir um(a) destinatário(a), talvez exista encomendas atribuidas a esse destinatário, verifique!'
-    );
+    toast.error(translateErrorMessages(err.response.data.error));
     yield put(recipientDeleteFailure());
   }
 }

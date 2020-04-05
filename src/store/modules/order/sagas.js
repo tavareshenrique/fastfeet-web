@@ -1,6 +1,7 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 
 import { toast } from 'react-toastify';
+import { translateErrorMessages } from 'fastfeet-translation-errors';
 import { removeChar } from '~/utils/removeChar';
 
 import history from '~/services/history';
@@ -27,7 +28,7 @@ export function* ordersPost({ payload }) {
 
     history.push('/orders');
   } catch (err) {
-    toast.error('Falha ao incluir uma encomenda!');
+    toast.error(translateErrorMessages(err.response.data.error));
     yield put(orderPostFailure());
   }
 }
@@ -44,7 +45,7 @@ export function* ordersUpdate({ payload }) {
 
     history.push('/orders');
   } catch (err) {
-    toast.error('Falha ao alterar a encomenda!');
+    toast.error(translateErrorMessages(err.response.data.error));
     yield put(orderUpdateFailure());
   }
 }
@@ -65,7 +66,7 @@ export function* ordersDelete({ payload }) {
 
     history.push('/orders');
   } catch (err) {
-    toast.error('Falha ao excluir uma encomenda!');
+    toast.error(translateErrorMessages(err.response.data.error));
     yield put(orderDeleteFailure());
   }
 }
