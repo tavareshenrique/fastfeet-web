@@ -46,7 +46,7 @@ export default function AsyncSelect({
 }
 
 AsyncSelect.defaultProps = {
-  defaultId: -1,
+  defaultId: '-1',
 };
 
 AsyncSelect.propTypes = {
@@ -54,6 +54,6 @@ AsyncSelect.propTypes = {
   label: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
   fieldName: PropTypes.string.isRequired,
-  defaultId: PropTypes.number,
+  defaultId: PropTypes.string,
   setValue: PropTypes.func.isRequired,
 };

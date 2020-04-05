@@ -37,8 +37,8 @@ export default function OrdersEdit() {
   const [dataRecipient, setDataRecipient] = useState([]);
   const [dataDeliverymen, setDataDeliverymen] = useState([]);
 
-  const [recipientId, setRecipientId] = useState(-1);
-  const [deliverymanId, setDeliverymanId] = useState(-1);
+  const [recipientId, setRecipientId] = useState('-1');
+  const [deliverymanId, setDeliverymanId] = useState('-1');
 
   const [recipientError, setRecipientError] = useState('');
   const [deliverymanError, setDeliverymanError] = useState('');
@@ -50,7 +50,7 @@ export default function OrdersEdit() {
       const arrRecipients = [];
       response.data.forEach(recipient => {
         arrRecipients.push({
-          value: recipient.id,
+          value: String(recipient.id),
           label: recipient.name,
         });
       });
@@ -180,7 +180,7 @@ export default function OrdersEdit() {
                 error={recipientError}
                 fieldName="recipient"
                 data={dataRecipient}
-                defaultId={recipientId}
+                defaultId={String(recipientId)}
                 setValue={idRecipient => setRecipientId(idRecipient)}
               />
             </Col>
