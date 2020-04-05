@@ -20,7 +20,7 @@ export default function SignIn() {
 
   const loading = useSelector(state => state.auth.loading);
 
-  async function handleSubmit(data, { reset }) {
+  async function handleSubmit(data) {
     const { email, password } = data;
 
     try {
@@ -39,7 +39,7 @@ export default function SignIn() {
 
       dispatch(signInRequest(email, password));
 
-      reset();
+      formRef.current.clearField('password');
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errorMessages = {};
